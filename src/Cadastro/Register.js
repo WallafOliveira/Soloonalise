@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Cadastro = () => {
     const [nome, setNome] = useState('');
@@ -18,9 +17,21 @@ const Cadastro = () => {
             senha: senha  // Senha em texto simples, que será enviada para o backend
         };
 
-        // Enviar dados para o backend Flask
-        axios.post('http://127.0.0.1:5000/usuarios', usuario)
+        // Enviar dados para o backend Flask utilizando fetch
+        fetch('http://127.0.0.1:5000/usuarios', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuario)
+        })
             .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao cadastrar usuário.');
+                }
+                return response.json(); // Supondo que o backend retorna um JSON
+            })
+            .then(data => {
                 setSucesso('Usuário cadastrado com sucesso!');
                 setErro('');
                 setNome('');

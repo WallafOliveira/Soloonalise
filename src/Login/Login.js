@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -16,9 +15,21 @@ const Login = () => {
             senha: senha
         };
 
-        // Enviar dados para o backend Flask
-        axios.post('http://127.0.0.1:5000/login', usuario)
+        // Enviar dados para o backend Flask utilizando fetch
+        fetch('http://127.0.0.1:5000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuario)
+        })
             .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao fazer login.');
+                }
+                return response.json(); // Supondo que o backend retorna um JSON
+            })
+            .then(data => {
                 setSucesso('Login bem-sucedido!');
                 setErro('');
                 setEmail('');
