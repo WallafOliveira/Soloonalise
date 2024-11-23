@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import './style.css';
 
 const ProblemasESolucoes = () => {
@@ -7,10 +6,11 @@ const ProblemasESolucoes = () => {
 
     useEffect(() => {
         // Requisição para obter as condições anormais e soluções do backend
-        axios.get('https://backsolo2.onrender.com/api/condicoes_anormais') // Alterado para a URL online
-            .then(response => {
+        fetch('https://backsolo2.onrender.com/api/condicoes_anormais')
+            .then(response => response.json()) // Converte a resposta em JSON
+            .then(data => {
                 // Inverter a ordem dos itens para que o último fique no topo
-                setCondicoesAnormais(response.data.reverse());
+                setCondicoesAnormais(data.reverse());
             })
             .catch(error => {
                 console.error('Erro ao buscar as condições anormais', error);
