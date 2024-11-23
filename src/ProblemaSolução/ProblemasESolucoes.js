@@ -7,7 +7,7 @@ const ProblemasESolucoes = () => {
 
     useEffect(() => {
         // Requisição para obter as condições anormais e soluções do backend
-        axios.get('http://127.0.0.1:5000/api/condicoes_anormais')
+        axios.get('https://backsolo2.onrender.com/api/condicoes_anormais') // Alterado para a URL online
             .then(response => {
                 // Inverter a ordem dos itens para que o último fique no topo
                 setCondicoesAnormais(response.data.reverse());
